@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting to YouTube...</title>
+  <meta property="og:title" content="Watch this on YouTube!" />
+  <meta property="og:description" content="Redirecting you to an amazing video..." />
+  <meta property="og:image" content="https://img.youtube.com/vi/T5NhpcY0Snk/maxresdefault.jpg" />
+  <meta property="og:url" content="https://openinyoutube.github.io/redirect.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <style>
+    body { background-color: #000; color: #fff; font-family: Arial, sans-serif;
+           display: flex; flex-direction: column; justify-content: center; align-items: center;
+           height: 100vh; margin: 0; text-align: center; }
+    .loader { width: 50px; height: 50px; border: 5px solid #444; border-top: 5px solid #0af;
+              border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .message { margin-top: 20px; font-size: 18px; }
+    a { color: #0af; text-decoration: underline; font-weight: bold; }
+  </style>
+  <script>
+    function redirectToYouTube() {
+      const webUrl = "https://youtu.be/T5NhpcY0Snk";
+      const appUrl = "vnd.youtube://T5NhpcY0Snk";
+      const intentUrl = "intent://youtu.be/T5NhpcY0Snk#Intent;package=com.google.android.youtube;scheme=https;end";
+      const ua = navigator.userAgent;
+      if (/Android/i.test(ua)) {
+        window.location.href = intentUrl;
+      } else if (/iPhone|iPad|iPod/i.test(ua)) {
+        window.location.href = appUrl;
+        setTimeout(() => { window.location.href = webUrl; }, 2500);
+      } else {
+        window.location.href = webUrl;
+      }
+    }
+    function loopRedirect() {
+      const currentUrl = window.location.origin + window.location.pathname;
+      const randomString = Math.random().toString(36).substring(7);
+      window.location.href = currentUrl + '?r=' + randomString;
+    }
+    window.onload = function() {
+      setTimeout(() => { redirectToYouTube(); }, 100);
+    };
+  </script>
+</head>
+<body>
+  <div class="loader"></div>
+  <div class="message">
+    <p>Opening YouTube…</p>
+    <p>If it doesn’t open, <a href="javascript:loopRedirect()">Click Here</a>.</p>
+  </div>
+</body>
+</html>
